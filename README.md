@@ -8,9 +8,9 @@ couple months by doing intervals of running and walking, gradually
 increasing the running and decreasing the walking. A disconnected
 timer is helpful. 
 
-This has been tested on an iPod Touch running IOS 6. Load it in
-Safari, save it to the home screen, and it should be available for
-offline usage. 
+This has been tested on an iPod Touch running IOS 6. Load the page
+(http://wiredfool.github.io/C25K-timer/) in Safari, save it to the
+home screen, and it should be available for offline usage.
 
 
 License
