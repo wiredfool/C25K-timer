@@ -1,4 +1,4 @@
-//timer = (function(){
+timer = (function(){
   var activities = ['Run', 'Walk'];
 
   var activity = 0;
@@ -36,10 +36,29 @@
     a_chime.play();
   }
 
-  var init = function(e){
+  var init_alarm = function(){
+     /* work around safari limitation that the first
+       play of a sound has to be from an event handler */
+    a_chime.play();
+    a_chime.pause();
+  }
+  var save_prefs = function(){
+      localStorage.setItem('run', inputs[0].value);
+      localStorage.setItem('walk', inputs[1].value);
+  }
+
+  var load_prefs = function(){
+    if (localStorage.key('run')){
+      inputs[0].value = localStorage.getItem('run');
+      inputs[1].value = localStorage.getItem('walk');
+    }
+  }
+
+  var start = function(e){
     remaining = parseInt(inputs[activity].value);
     update_display();
-    alarm();
+    init_alarm();
+    save_prefs();
     interval = setInterval(tick, 1000);
     e.preventDefault();
     e.stopPropagation();
@@ -56,6 +75,8 @@
   }
 
 
-  document.getElementById('start').addEventListener('click', init)
+  document.getElementById('start').addEventListener('click', start)
   document.getElementById('stop').addEventListener('click', stop)
+  load_prefs();
 
+})()
