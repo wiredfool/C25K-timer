@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html manifest="cache.manifest">
+<head>
+  <meta name="viewport" content="width=device-width">
+  <title>C25k</title>
+  <style type=text/css>
+    label {
+      display: block;
+      font-size: 24px;
+      position: relative;
+      width: 100%;
+      height: 48px;
+    }
+    input {
+      font-size: 24px;
+      width: 50%;
+      right: 0px;
+      position: absolute;
+    }
+    #activity, #countdown {
+      font-family: Helvetica;
+      font-size: 64px;
+      height: 72px;
+      text-align: center;
+    }
+    button {
+      font-size: 24px;
+      -webkit-border-radius: 10px;
+      width: 150px;
+      height: 70px;
+      margin: auto;
+    }
+
+  </style>
+</head>
+<body>
+  <div>
+    <div id='activity'></div>
+    <div id='countdown'></div>
+    <form>
+      <label for='run'>Run (sec) <input id='run' type='number' size=10 value=3></label>
+      <label for='walk'>Walk (sec) <input id='walk' type='number' size=10 value=5></label>
+      <button id='start'>Start</button>
+      <button id='stop'>Stop</button>
+    </form>
+  </div>
+  <audio id='chime' preload='auto'>
+    <source src='Chime.m4a' type="audio/mpeg" />
+  </audio>
+  <script type='text/javascript' src='timer.js'></script>
+  </body>
+</html>
+
+
