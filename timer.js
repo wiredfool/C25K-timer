@@ -59,6 +59,12 @@ timer = (function(){
     update_display();
     init_alarm();
     save_prefs();
+    try{
+      clearInterval(interval);
+    } catch(e){}
+
+    document.getElementById('start').disabled = true;
+    document.getElementById('stop').disabled = false;
     interval = setInterval(tick, 1000);
     e.preventDefault();
     e.stopPropagation();
@@ -69,6 +75,8 @@ timer = (function(){
     clearInterval(interval);
     interval = 0;
     activity = 0;
+    document.getElementById('start').disabled = false;
+    document.getElementById('stop').disabled = true;
     e.preventDefault();
     e.stopPropagation();
     return false;
