@@ -25,7 +25,12 @@ timer = (function(){
 
   var update_display = function(){
     activity_elt.textContent = activities[activity];
-    timer_elt.textContent =' ' + remaining +' ';
+    var remain_string = '' + remaining;
+    if (remaining >= 60){
+      remain_string = Math.floor(remaining / 60) + ':' +
+          ('0'+ remaining % 60).slice(-2)
+    }
+    timer_elt.textContent =' ' + remain_string +' ';
   }
   var swapActivity=function(){
     activity = !activity +0;
