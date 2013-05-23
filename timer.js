@@ -51,19 +51,29 @@ timer = (function(){
   }
 
   var save_prefs = function(){
-      localStorage.setItem('run', inputs[0].value);
-      localStorage.setItem('walk', inputs[1].value);
+      var current = [];
+      try {
+        current = JSON.parse(localStorage.getItem('inputs')) || [];
+      }catch (e){};
+      for (var i=0;i<inputs.length;i++){
+        current[i] = inputs[i].value;
+      }
+      localStorage.setItem('inputs', JSON.stringify(current));
   }
 
   var load_prefs = function(){
-    if (localStorage.key('run')){
-      inputs[0].value = localStorage.getItem('run');
-      inputs[1].value = localStorage.getItem('walk');
+    try {
+      current = JSON.parse(localStorage.getItem('inputs'));
+      for (var i=0;i<inputs.length && i< current.length;i++){
+        inputs[i].value = current[i];
+      }
     }
+    catch(e){}
   }
 
   var start = function(e){
     remaining = parseInt(inputs[activity].value);
+    window.getSelection().removeAllRanges()
     document.getElementById('d_start').className='hidden';
     document.getElementById('countdown').className='';
     document.getElementById('activity').className='';
@@ -121,6 +131,7 @@ timer = (function(){
   }
 
   var cb_activity = function(e){
+    window.getSelection().removeAllRanges()
     if (paused) {
       swap_activity();
       update_display();
@@ -129,6 +140,7 @@ timer = (function(){
   }
 
   var cb_countdown = function(e){
+    window.getSelection().removeAllRanges()
     if (paused) {
       remaining = parseInt(inputs[activity].value);
       save_prefs();
@@ -146,5 +158,6 @@ timer = (function(){
 
 
   load_prefs();
+
 
 })()
