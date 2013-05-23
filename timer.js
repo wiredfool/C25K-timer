@@ -3,21 +3,22 @@ timer = (function(){
 
   var activity = 0;
   var remaining = 0;
+  var paused = 0;
 
   var timer_elt = document.getElementById('countdown')
   var activity_elt = document.getElementById('activity')
 
   var a_chime = document.getElementById('chime');
 
-  var inputs = [document.getElementById('run'),
-                document.getElementById('walk')];
+  var inputs = [document.getElementById('s_1'),
+                document.getElementById('s_2')];
 
   var interval;
 
   var tick = function(){
     remaining = remaining - 1
     if (remaining == 0){
-      swapActivity()
+      swap_activity()
       alarm()
     }
     update_display()
@@ -32,8 +33,9 @@ timer = (function(){
     }
     timer_elt.textContent =' ' + remain_string +' ';
   }
-  var swapActivity=function(){
-    activity = !activity +0;
+
+  var swap_activity=function(){
+    activity = (activity + 1) % activities.length;
     remaining = parseInt(inputs[activity].value);
   }
 
@@ -47,6 +49,7 @@ timer = (function(){
     a_chime.play();
     a_chime.pause();
   }
+
   var save_prefs = function(){
       localStorage.setItem('run', inputs[0].value);
       localStorage.setItem('walk', inputs[1].value);
@@ -61,6 +64,9 @@ timer = (function(){
 
   var start = function(e){
     remaining = parseInt(inputs[activity].value);
+    document.getElementById('d_start').className='hidden';
+    document.getElementById('countdown').className='';
+    document.getElementById('activity').className='';
     update_display();
     init_alarm();
     save_prefs();
@@ -68,9 +74,36 @@ timer = (function(){
       clearInterval(interval);
     } catch(e){}
 
-    document.getElementById('start').disabled = true;
-    document.getElementById('stop').disabled = false;
+    document.getElementById('pause').disabled = false;
     interval = setInterval(tick, 1000);
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
+  var restart = function(){
+    update_display();
+    save_prefs();
+    try{
+      clearInterval(interval);
+    } catch(e){}
+    interval = setInterval(tick, 1000);
+    paused = 0;
+
+    document.getElementById('pause').innerText = 'Pause';
+
+  }
+
+  var pause = function(){
+    clearInterval(interval);
+    interval = 0;
+    paused = 1;
+    document.getElementById('pause').innerText = 'Continue';
+  }
+
+  var cb_pause = function(e){
+    if (paused) { restart(); }
+    else { pause(); }
     e.preventDefault();
     e.stopPropagation();
     return false;
@@ -80,16 +113,38 @@ timer = (function(){
     clearInterval(interval);
     interval = 0;
     activity = 0;
-    document.getElementById('start').disabled = false;
-    document.getElementById('stop').disabled = true;
+    //document.getElementById('start').disabled = false;
+    //document.getElementById('stop').disabled = true;
     e.preventDefault();
     e.stopPropagation();
     return false;
   }
 
+  var cb_activity = function(e){
+    if (paused) {
+      swap_activity();
+      update_display();
+    }
+    return false;
+  }
 
-  document.getElementById('start').addEventListener('click', start)
-  document.getElementById('stop').addEventListener('click', stop)
+  var cb_countdown = function(e){
+    if (paused) {
+      remaining = parseInt(inputs[activity].value);
+      save_prefs();
+      update_display();
+    }
+    return false;
+  }
+
+  document.getElementById('d_start').addEventListener('click', start)
+  document.getElementById('pause').addEventListener('click', cb_pause)
+  activity_elt.addEventListener('click', cb_activity);
+  timer_elt.addEventListener('click', cb_countdown);
+
+  document.getElementById('pause').disabled = true;
+
+
   load_prefs();
 
 })()

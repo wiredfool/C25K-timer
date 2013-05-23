@@ -1,90 +1,106 @@
 <!DOCTYPE HTML>
 <html x-manifest="cache.manifest">
-<head>
-  <meta name="viewport" content="width=device-width">
-  <title>C25k</title>
-  <style type=text/css>
-    label {
-      display: block;
-      font-size: 24px;
-      position: relative;
-      width: 100%;
-      height: 48px;
-    }
-    input, select {
-      font-size: 24px;
-      width: 50%;
-      right: 0px;
-      position: absolute;
-    }
-    #activity, #countdown {
-      font-family: Helvetica;
-      font-size: 64px;
-      height: 72px;
-      text-align: center;
-    }
-    button {
-      font-size: 24px;
-      -webkit-border-radius: 10px;
-      width: 47%;
-      height: 70px;
-      margin-left: 1.33%;
-      margin-right: 1.33%;
-    }
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <title>C25k</title>
+    <style type=text/css>
+      label {
+        display: block;
+        font-size: 24px;
+        position: relative;
+        width: 100%;
+        height: 48px;
+      }
+      input, select {
+        font-size: 24px;
+        width: 47%;
+        margin-right: 1.33%;
+        right:1px;
+        position: absolute;
+      }
+      #activity, #countdown  {
+        font-family: Helvetica;
+        font-size: 64px;
+        height: 72px;
+        text-align: center;
+      }
+      #d_start  {
+        font-family: Helvetica;
+        font-size: 64px;
+        height: 72px;
+        margin-top: 38px;
+        margin-bottom: 42px;
+        text-align: center;
+      }
 
-  </style>
-</head>
-<body>
-  <div>
-    <div id='activity'></div>
-    <div id='countdown'></div>
-    <form>
-      <label for='run'>Run <select id='run'>
-        <option value='5'>0:05</option>
-        <option value='30'>0:30</option>
-        <option value='60'>1:00</option>
-        <option value='90'>1:30</option>
-        <option value='120'>2:00</option>
-        <option value='150'>2:30</option>
-        <option value='180'>3:00</option>
-        <option value='210'>3:30</option>
-        <option value='240'>4:00</option>
-        <option value='270'>4:30</option>
-        <option value='300'>5:00</option>
-        <option value='330'>5:30</option>
-        <option value='360'>6:00</option>
-        <option value='390'>6:30</option>
-        <option value='420'>7:00</option>
-        <option value='450'>7:30</option>
-        <option value='480'>8:00</option>
-        <option value='510'>8:30</option>
-        <option value='540'>9:00</option>
-        <option value='570'>9:30</option>
-        <option value='600'>10:00</option>
-        </select>
-      </label>
-      <label for='walk'>Walk <select id='walk'>
-        <option value='5'>0:05</option>
-        <option value='30'>0:30</option>
-        <option value='60'>1:00</option>
-        <option value='90'>1:30</option>
-        <option value='120'>2:00</option>
-        <option value='150'>2:30</option>
-        <option value='180'>3:00</option>
-        <option value='210'>3:30</option>
-        <option value='240'>4:00</option>
-        <option value='270'>4:30</option>
-        <option value='300'>5:00</option>
-        </select>
-      </label>
-      <button id='start'>Start</button>
-      <button id='stop'>Stop</button>
-    </form>
-  </div>
-  <audio id='chime' preload='auto'>
-    <source src='boathorn.m4a' type="audio/mpeg" />
-  </audio>
-  <script type='text/javascript' src='timer.js'></script>
+      button {
+        font-size: 24px;
+        -webkit-border-radius: 10px;
+        height: 70px;
+        width: 50%;
+        margin-left: 25%;
+      }
+      .hidden{
+          display: none;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id='activity' class='hidden'></div>
+      <div id='countdown' class='hidden'></div>
+      <div id='d_start'>Start</div>
+      <form>
+        <div id='d_1'>
+          <label for='s_1'>Run <select id='s_1'>
+            <option value='5'>0:05</option>
+            <option value='30'>0:30</option>
+            <option value='60'>1:00</option>
+            <option value='90'>1:30</option>
+            <option value='120'>2:00</option>
+            <option value='150'>2:30</option>
+            <option value='180'>3:00</option>
+            <option value='210'>3:30</option>
+            <option value='240'>4:00</option>
+            <option value='270'>4:30</option>
+            <option value='300'>5:00</option>
+            <option value='330'>5:30</option>
+            <option value='360'>6:00</option>
+            <option value='390'>6:30</option>
+            <option value='420'>7:00</option>
+            <option value='450'>7:30</option>
+            <option value='480'>8:00</option>
+            <option value='510'>8:30</option>
+            <option value='540'>9:00</option>
+            <option value='570'>9:30</option>
+            <option value='600'>10:00</option>
+            </select>
+          </label>
+        </div>
+        <div id='d_2'>
+          <label for='s_2'>Walk <select id='s_2'>
+            <option value='5'>0:05</option>
+            <option value='30'>0:30</option>
+            <option value='60'>1:00</option>
+            <option value='90'>1:30</option>
+            <option value='120'>2:00</option>
+            <option value='150'>2:30</option>
+            <option value='180'>3:00</option>
+            <option value='210'>3:30</option>
+            <option value='240'>4:00</option>
+            <option value='270'>4:30</option>
+            <option value='300'>5:00</option>
+            </select>
+          </label>
+        </div>
+        <button id='pause'>Pause</button>
+      </form>
+    </div>
+    <audio id='chime' preload='auto'>
+      <source src='boathorn.m4a' type="audio/mpeg" />
+    </audio>
+    <script type='text/javascript' src='timer.js'></script>
   </body>
 </html>
 
