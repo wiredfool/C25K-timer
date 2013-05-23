@@ -1,5 +1,5 @@
 timer = (function(){
-  var activities = ['Run', 'Walk'];
+  var activities = ['Run', 'Walk', 'Run', 'Walk'];
 
   var activity = 0;
   var remaining = 0;
@@ -11,7 +11,10 @@ timer = (function(){
   var a_chime = document.getElementById('chime');
 
   var inputs = [document.getElementById('s_1'),
-                document.getElementById('s_2')];
+                document.getElementById('s_2'),
+                document.getElementById('s_3'),
+                document.getElementById('s_4')
+                 ];
 
   var interval;
 
